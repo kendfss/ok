@@ -34,8 +34,21 @@ func (*Command) Description() string {
 
 // Run is the entry point for the "ok test" command.
 func (c *Command) Run(args []string) {
-	flag.StringVar(&c.Filter, "f", "", "regexp to filter tests by name")
-	flag.BoolVar(&c.Verbose, "v", false, "print all test names")
+	flag.Usage = func() {
+		fmt.Println(c.Description())
+		fmt.Println("Usage:")
+		fmt.Println("")
+		fmt.Println("\tok test [args]")
+		fmt.Println("")
+		fmt.Println("the flags are:")
+		fmt.Println("")
+		fmt.Println("\t-f\t\tregular expression to filter tests by name")
+		fmt.Println("\t-help\t\tprint this message")
+		fmt.Println("\t-v\t\tprint all test names")
+		fmt.Println("")
+	}
+	flag.StringVar(&c.Filter, "f", "", "")
+	flag.BoolVar(&c.Verbose, "v", false, "")
 	check(flag.CommandLine.Parse(args))
 	args = flag.Args()
 
